@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String    @unique
+  password  String    // Mot de passe hashé
+  role      String    @default("USER") // USER ou ADMIN
+  posts     Post[]
+  comments  Comment[]
+  critiques Critique[]
+}
+
+model Post {
+  id        Int       @id @default(autoincrement())
+  title     String
+  content   String
+  author    User      @relation(fields: [authorId], references: [id])
+  authorId  Int
+  comments  Comment[]
+}
+
+model Comment {
+  id        Int       @id @default(autoincrement())
+  content   String
+  post      Post      @relation(fields: [postId], references: [id])
+  postId    Int
+  author    User      @relation(fields: [authorId], references: [id])
+  authorId  Int
+}
+
+// NOUVEAUX MODÈLES CINÉMA
+model Film {
+  id          Int       @id @default(autoincrement())
+  titre       String
+  annee       Int
+  duree       Int
+  genre       String
+  realisateur Realisateur @relation(fields: [realisateurId], references: [id])
+  realisateurId Int
+  critiques   Critique[]
+}
+
+model Realisateur {
+  id    Int    @id @default(autoincrement())
+  nom   String
+  pays  String
+  films Film[]
+}
+
+model Critique {
+  id     Int    @id @default(autoincrement())
+  note   Int    // de 1 à 5
+  texte  String
+  film   Film   @relation(fields: [filmId], references: [id])
+  filmId Int
+  auteur User   @relation(fields: [auteurId], references: [id])
+  auteurId Int
+}

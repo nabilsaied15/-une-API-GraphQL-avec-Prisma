@@ -1,0 +1,26 @@
+{
+  "name": "api-cinema-graphql",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node src/server.js",
+    "start": "node src/server.js",
+    "db:migrate": "npx prisma migrate dev",
+    "db:studio": "npx prisma studio",
+    "db:generate": "npx prisma generate",
+    "db:reset": "npx prisma migrate reset",
+    "db:push": "npx prisma db push"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "graphql": "^16.8.1",
+    "express-graphql": "^0.12.0",
+    "prisma": "^5.0.0",
+    "@prisma/client": "^5.0.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.0.0",
+    "express-rate-limit": "^7.1.0"
+  }
+}
